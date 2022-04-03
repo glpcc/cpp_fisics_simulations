@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 using std::sqrt;
+using namespace std;
+
 
 void ball::draw(sf::RenderWindow& window){
     window.draw(circle);
@@ -24,7 +26,7 @@ void ball::move(float movX, float movY){
 
 void ball::update(bool gravity){
     if (gravity){
-        acelY = 9.8/1000000000;
+        acelY = 9.8/144;
     }
     velX += acelX;
     velY += acelY;
@@ -48,9 +50,26 @@ void ball::testBallCollisions(ball balls[],int index,int size){
         float center1_y = circle.getPosition().y + circle.getRadius();
         float center2_x = balls[i].circle.getPosition().x + balls[i].circle.getRadius();
         float center2_y = balls[i].circle.getPosition().y + balls[i].circle.getRadius();
+
         if (sqrt((center1_x-center2_x)*(center1_x-center2_x) + (center1_y-center2_y)*(center1_y-center2_y)) <= circle.getRadius() + balls[i].circle.getRadius()){
-            radsVector = 
+            // cout << sqrt((center1_x-center2_x)*(center1_x-center2_x) + (center1_y-center2_y)*(center1_y-center2_y));
+            // cout << "\n";
+            // cout << circle.getRadius() + balls[i].circle.getRadius();
+            // cout << "End\nBegin";
+            float radsVector[2] = {center2_x-center1_x,center2_y-center1_y};
+            float vel1_vect[2] = {velX,velY};
+            float vel2_vect[2] = {balls[i].velX,balls[i].velY};
+            float proj1 = dot2DProduct(vel1_vect,radsVector)/dot2DProduct(radsVector,radsVector);
+            velX -= 2*proj1+radsVector[0];
+            velY -= 2*proj1+radsVector[1];
+            float proj2 = dot2DProduct(vel2_vect,radsVector)/dot2DProduct(radsVector,radsVector); 
+            balls[i].velX -= 2*proj2+radsVector[0];
+            balls[i].velY -= 2*proj2+radsVector[2];
         }   
     }
     
+}
+
+float ball::dot2DProduct(float vect1[2], float vect2[2]){
+    return vect1[0]*vect2[0] + vect1[1]*vect2[1];
 }

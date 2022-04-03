@@ -8,8 +8,9 @@ int main()
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML", sf::Style::Default, settings);
-    ball ball1(200,100,20,0.1,0.1);
-    ball ball2(100,200,20,-0.1,0.1);
+    window.setFramerateLimit(144);
+    int num_balls = 2;
+    ball balls[] = {ball(200,100,50,1,1),ball(500,300,50,-1,1)};
     while (window.isOpen())
     {
         sf::Event event;
@@ -19,10 +20,14 @@ int main()
                 window.close();
         }
         window.clear(sf::Color::Black);
-        ball1.testWalls();
-        ball1.update(false);
-        ball1.draw(window);
+        for (int i = 0; i < num_balls; i++)
+        {
+            balls[i].testWalls();
+            balls[i].testBallCollisions(balls,i+1,num_balls);
+            balls[i].update(true);
+            balls[i].draw(window);
+        }
         window.display();
     }
     return 0;
-}
+} 
