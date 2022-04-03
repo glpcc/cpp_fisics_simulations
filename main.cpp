@@ -10,7 +10,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML", sf::Style::Default, settings);
     window.setFramerateLimit(144);
     int num_balls = 2;
-    ball balls[] = {ball(200,100,50,1,1),ball(500,300,50,-1,1)};
+    ball balls[] = {ball(200,200,50,1,0),ball(600,300,50,-1.5,0)};
     while (window.isOpen())
     {
         sf::Event event;
@@ -23,7 +23,7 @@ int main()
         for (int i = 0; i < num_balls; i++)
         {
             balls[i].testWalls();
-            balls[i].testBallCollisions(balls,i+1,num_balls);
+            balls[i].testBallCollisions(balls,i,num_balls);
             balls[i].update(true);
             balls[i].draw(window);
         }
