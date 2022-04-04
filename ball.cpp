@@ -34,14 +34,26 @@ void ball::update(bool gravity){
 }
 
 void ball::testWalls(){
-    if (circle.getPosition().x + 2*circle.getRadius() >= 800 || circle.getPosition().x <= 0)
+    if (circle.getPosition().x + 2*circle.getRadius() >= 800 )
     {
+        circle.move(800 - circle.getPosition().x - 2*circle.getRadius(),0);
+        velX = -velX;
+    }else if (circle.getPosition().x <= 0)
+    {
+        circle.move(-circle.getPosition().x,0);
         velX = -velX;
     }
-    if (circle.getPosition().y + 2*circle.getRadius() >= 800 || circle.getPosition().y <= 0)
+    
+    if (circle.getPosition().y + 2*circle.getRadius() >= 800 )
     {
+        circle.move(0,800 - circle.getPosition().y - 2*circle.getRadius());
+        velY = -velY;
+    }else if (circle.getPosition().y <= 0)
+    {
+        circle.move(0,- circle.getPosition().y);
         velY = -velY;
     }
+    
 }
 void ball::testBallCollisions(ball balls[],int index,int size){
     for (int i = index+1; i < size; i++)

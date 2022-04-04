@@ -9,8 +9,8 @@ int main()
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML", sf::Style::Default, settings);
     window.setFramerateLimit(144);
-    int num_balls = 2;
-    ball balls[] = {ball(200,200,50,1,0),ball(600,300,50,-1.5,0)};
+    int num_balls = 4;
+    ball balls[] = {ball(200,200,30,1,0),ball(600,300,30,-1.5,0),ball(600,100,30,-1.5,-1),ball(100,300,30,-1.5,2)};
     while (window.isOpen())
     {
         sf::Event event;
